@@ -16,9 +16,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 type RootStackParamList = {
   Client2Login: undefined;
-  ClientSignup: undefined;
+  ClientSignup: { clientType: 'client1' | 'client2' };
   ForgotPassword: undefined;
   Client2Home: undefined;
+  ProfileSelectScreen: undefined; 
 };
 
 type Client2LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Client2Login'>;
@@ -43,6 +44,10 @@ const Client2LoginScreen: React.FC = () => {
     }, 1500);
   };
 
+  const handleBackPress = () => {
+    navigation.goBack(); // Fixed: Use goBack() instead of navigate()
+  };
+
   return (
     <KeyboardAvoidingView 
       style={styles.container}
@@ -50,6 +55,11 @@ const Client2LoginScreen: React.FC = () => {
     >
       <StatusBar backgroundColor="#A3302D" barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Back Button */}
+        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
+
         <View style={styles.header}>
           <Text style={styles.title}>Client 2 Login</Text>
           <Text style={styles.subtitle}>Welcome back! Please sign in to your account</Text>
@@ -101,7 +111,9 @@ const Client2LoginScreen: React.FC = () => {
 
           <View style={styles.signupContainer}>
             <Text style={styles.signupText}>Don't have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('ClientSignup')}>
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('ClientSignup', { clientType: 'client2' })}
+            >
               <Text style={styles.signupLink}>Sign Up</Text>
             </TouchableOpacity>
           </View>
@@ -121,9 +133,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  backButton: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 50 : 20,
+    left: 20,
+    zIndex: 10,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: '#A3302D',
+    fontWeight: 'bold',
+  },
   header: {
     alignItems: 'center',
     marginBottom: 40,
+    marginTop: 40, 
   },
   title: {
     fontSize: 32,

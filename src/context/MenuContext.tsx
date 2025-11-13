@@ -1,67 +1,32 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { MenuItem, Course } from '../types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { MenuItem } from '../types';
 
 interface MenuContextType {
   menuItems: MenuItem[];
   addMenuItem: (item: Omit<MenuItem, 'id'>) => void;
   removeMenuItem: (id: string) => void;
-  clearAllMenuItems: () => void;
 }
 
 const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
-export const MenuProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MenuProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
-  // Load menu items from storage on app start
-  useEffect(() => {
-    loadMenuItems();
-  }, []);
-
-  const loadMenuItems = async () => {
-    try {
-      const storedItems = await AsyncStorage.getItem('menuItems');
-      if (storedItems) {
-        setMenuItems(JSON.parse(storedItems));
-      }
-    } catch (error) {
-      console.error('Error loading menu items:', error);
-    }
-  };
-
-  const saveMenuItems = async (items: MenuItem[]) => {
-    try {
-      await AsyncStorage.setItem('menuItems', JSON.stringify(items));
-    } catch (error) {
-      console.error('Error saving menu items:', error);
-    }
-  };
-
   const addMenuItem = (item: Omit<MenuItem, 'id'>) => {
-    const newItem: MenuItem = {
+    const newMenuItem: MenuItem = {
       ...item,
-      id: Date.now().toString(),
+      id: Math.random().toString(36).substr(2, 9), // Generate unique ID
     };
-    
-    const updatedItems = [...menuItems, newItem];
-    setMenuItems(updatedItems);
-    saveMenuItems(updatedItems);
+    setMenuItems(prev => [...prev, newMenuItem]);
   };
 
   const removeMenuItem = (id: string) => {
-    const updatedItems = menuItems.filter(item => item.id !== id);
-    setMenuItems(updatedItems);
-    saveMenuItems(updatedItems);
-  };
-
-  const clearAllMenuItems = () => {
-    setMenuItems([]);
-    saveMenuItems([]);
+    console.log('Removing item with ID:', id);
+    setMenuItems(prev => prev.filter(item => item.id !== id));
   };
 
   return (
-    <MenuContext.Provider value={{ menuItems, addMenuItem, removeMenuItem, clearAllMenuItems }}>
+    <MenuContext.Provider value={{ menuItems, addMenuItem, removeMenuItem }}>
       {children}
     </MenuContext.Provider>
   );

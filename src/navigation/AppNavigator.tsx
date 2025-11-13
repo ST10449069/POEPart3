@@ -22,7 +22,8 @@ export type RootStackParamList = {
   Client1Login: undefined;
   Client2Login: undefined;
   ChefSignup: undefined;
-  ClientSignup: undefined;
+  // 🟢 FIXED: Now requires a clientType parameter
+  ClientSignup: { clientType: 'client1' | 'client2' }; 
   ForgotPassword: undefined;
   ChefHome: undefined;
   Client1Home: undefined;

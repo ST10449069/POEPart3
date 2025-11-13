@@ -11,11 +11,11 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type RootStackParamList = {
-  ClientSignup: undefined;
+  ClientSignup: { clientType: 'client1' | 'client2' }; 
   Client1Home: undefined;
   Client2Home: undefined;
   Client1Login: undefined;
@@ -23,14 +23,21 @@ type RootStackParamList = {
 };
 
 type ClientSignupScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ClientSignup'>;
+type ClientSignupRouteProp = RouteProp<RootStackParamList, 'ClientSignup'>;
+
 
 const ClientSignupScreen: React.FC = () => {
   const navigation = useNavigation<ClientSignupScreenNavigationProp>();
-  const route = useRoute();
   
-  // Determine which client type is signing up based on navigation
-  const isClient1 = true; 
-  const isClient2 = true;
+  const route = useRoute<ClientSignupRouteProp>();
+  
+  const clientType = route.params?.clientType;
+  const isClient1 = clientType === 'client1'; 
+  const isClient2 = clientType === 'client2'; 
+
+  // Determine the correct screen names based on the parameter
+  const loginScreen = isClient1 ? 'Client1Login' : 'Client2Login';
+  const homeScreen = isClient1 ? 'Client1Home' : 'Client2Home';
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -58,18 +65,21 @@ const ClientSignupScreen: React.FC = () => {
       Alert.alert('Error', 'Password must be at least 6 characters long');
       return;
     }
+    
+    if (!clientType) {
+        Alert.alert('Error', 'Client type not specified for signup.');
+        return;
+    }
+
 
     setLoading(true);
     // Simulate signup process
     setTimeout(() => {
       setLoading(false);
       Alert.alert('Success', 'Account created successfully!');
-      // Navigate to appropriate home screen based on client type
-      if (isClient1) {
-        navigation.replace('Client1Home');
-      } else {
-        navigation.replace('Client2Home');
-      }
+      // Navigate to appropriate home screen using the pre-determined variable
+      navigation.replace(homeScreen);
+      
     }, 2000);
   };
 
@@ -164,13 +174,7 @@ const ClientSignupScreen: React.FC = () => {
 
           <View style={styles.loginContainer}>
             <Text style={styles.loginText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => {
-              if (isClient1) {
-                navigation.navigate('Client1Login');
-              } else {
-                navigation.navigate('Client2Login');
-              }
-            }}>
+            <TouchableOpacity onPress={() => navigation.navigate(loginScreen as 'Client1Login' | 'Client2Login')}>
               <Text style={styles.loginLink}>Sign In</Text>
             </TouchableOpacity>
           </View>

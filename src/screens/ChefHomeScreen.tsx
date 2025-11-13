@@ -26,6 +26,13 @@ const ChefHomeScreen: React.FC<Props> = ({ navigation }) => {
   const startersCount = menuItems.filter(item => item.course === 'Starters').length;
   const mainsCount = menuItems.filter(item => item.course === 'Mains').length;
   const dessertsCount = menuItems.filter(item => item.course === 'Desserts').length;
+  const appetizerCount = menuItems.filter(item => item.course === 'Appetizer').length;
+  const horsdoeuvresCount = menuItems.filter(item => item.course === 'Hors D-Oeuvres').length;
+  const amuseboucheCount = menuItems.filter(item => item.course === 'Amuse-Bouche').length;
+  const soupCount = menuItems.filter(item => item.course === 'Soup').length;
+  const saladCount = menuItems.filter(item => item.course === 'Salad').length;
+  const sorbetCount = menuItems.filter(item => item.course === 'Sorbet').length;
+  const proseccoCount = menuItems.filter(item => item.course === 'Prosecco').length;
 
   // Calculate average prices by course
   const calculateAveragePrice = (course: string) => {
@@ -38,6 +45,13 @@ const ChefHomeScreen: React.FC<Props> = ({ navigation }) => {
   const avgStartersPrice = calculateAveragePrice('Starters');
   const avgMainsPrice = calculateAveragePrice('Mains');
   const avgDessertsPrice = calculateAveragePrice('Desserts');
+  const avgAppetizerPrice = calculateAveragePrice('Appetizer')
+  const avgHorsDOeuvresPrice = calculateAveragePrice('Hors D-Oeuvres');
+  const avgAmuseBouchePrice = calculateAveragePrice('Amuse-Bouche');
+  const avgSoupPrice = calculateAveragePrice('Soup');
+  const avgSaladPrice = calculateAveragePrice('Salad');
+  const avgSorbetPrice = calculateAveragePrice('Sorbet');
+  const avgProseccoPrice = calculateAveragePrice('Prosecco');
   const avgOverallPrice = totalItems > 0 ? menuItems.reduce((sum, item) => sum + item.price, 0) / totalItems : 0;
 
   return (
@@ -74,6 +88,34 @@ const ChefHomeScreen: React.FC<Props> = ({ navigation }) => {
               <Text style={styles.statNumber}>{dessertsCount}</Text>
               <Text style={styles.statLabel}>Desserts</Text>
             </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{appetizerCount}</Text>
+              <Text style={styles.statLabel}>Appetizer</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{horsdoeuvresCount}</Text>
+              <Text style={styles.statLabel}>Hors D-Oeuvres</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{amuseboucheCount}</Text>
+              <Text style={styles.statLabel}>Amuse-Bouche</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{soupCount}</Text>
+              <Text style={styles.statLabel}>Soup</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{saladCount}</Text>
+              <Text style={styles.statLabel}>Salad</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{sorbetCount}</Text>
+              <Text style={styles.statLabel}>Sorbet</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>{proseccoCount}</Text>
+              <Text style={styles.statLabel}>Prosecco</Text>
+            </View>
           </View>
         </View>
 
@@ -104,6 +146,48 @@ const ChefHomeScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.priceCourse}>Desserts</Text>
                 <Text style={styles.priceValue}>
                   {dessertsCount > 0 ? `R${avgDessertsPrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Appetizer</Text>
+                <Text style={styles.priceValue}>
+                  {appetizerCount > 0 ? `R${avgAppetizerPrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Hors D'Oeuvres</Text>
+                <Text style={styles.priceValue}>
+                  {horsdoeuvresCount > 0 ? `R${avgHorsDOeuvresPrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Amuse-Bouche</Text>
+                <Text style={styles.priceValue}>
+                  {amuseboucheCount > 0 ? `R${avgAmuseBouchePrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Soup</Text>
+                <Text style={styles.priceValue}>
+                  {soupCount > 0 ? `R${avgSoupPrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Salad</Text>
+                <Text style={styles.priceValue}>
+                  {saladCount > 0 ? `R${avgSaladPrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Sorbet</Text>
+                <Text style={styles.priceValue}>
+                  {sorbetCount > 0 ? `R${avgSorbetPrice.toFixed(2)}` : 'N/A'}
+                </Text>
+              </View>
+              <View style={styles.priceRow}>
+                <Text style={styles.priceCourse}>Prosecco</Text>
+                <Text style={styles.priceValue}>
+                  {proseccoCount > 0 ? `R${avgProseccoPrice.toFixed(2)}` : 'N/A'}
                 </Text>
               </View>
             </View>

@@ -47,10 +47,14 @@ const BasicHeader = ({
   searchQuery, 
   onSearchChange, 
   onSearchSubmit, 
-  onProfilePress 
+  onProfilePress,
+  onBackPress 
 }: any) => (
   <View style={headerStyles.container}>
     <View style={headerStyles.topRow}>
+      <TouchableOpacity onPress={onBackPress} style={headerStyles.backButton}>
+        <Text style={headerStyles.backButtonText}>←</Text>
+      </TouchableOpacity>
       <View style={headerStyles.welcomeSection}>
         <Text style={headerStyles.welcomeText}>Welcome back,</Text>
         <Text style={headerStyles.userName}>{userName}</Text>
@@ -200,7 +204,7 @@ const Client1HomeScreen: React.FC<Props> = ({ navigation }) => {
   ];
 
   const courses: Course[] = [
-    {
+     {
       id: '1',
       name: 'French Onion Soup',
       image: require('../assets/courses/french-onion-soup.jpg'),
@@ -454,6 +458,10 @@ const Client1HomeScreen: React.FC<Props> = ({ navigation }) => {
     (navigation as any).navigate('AllCourses');
   };
 
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -474,6 +482,7 @@ const Client1HomeScreen: React.FC<Props> = ({ navigation }) => {
         onSearchChange={setSearchQuery}
         onSearchSubmit={handleSearch}
         onProfilePress={handleProfilePress}
+        onBackPress={handleBackPress}
       />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -555,6 +564,15 @@ const headerStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
+  },
+  backButton: {
+    padding: 8,
+    marginRight: 10,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
   welcomeSection: {
     flex: 1,

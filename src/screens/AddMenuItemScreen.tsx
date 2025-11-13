@@ -65,6 +65,13 @@ const AddMenuItemScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleRemoveMenuItem = (id: string) => {
+    console.log('Remove button clicked for ID:', id);
+    
+    if (!id) {
+      Alert.alert('Error', 'Invalid menu item ID');
+      return;
+    }
+
     Alert.alert(
       'Remove Item',
       'Are you sure you want to remove this item?',
@@ -76,7 +83,10 @@ const AddMenuItemScreen: React.FC<Props> = ({ navigation }) => {
         {
           text: 'Remove',
           style: 'destructive',
-          onPress: () => removeMenuItem(id),
+          onPress: () => {
+            console.log('Calling removeMenuItem with ID:', id);
+            removeMenuItem(id);
+          },
         },
       ]
     );
@@ -91,6 +101,7 @@ const AddMenuItemScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={styles.course}>{item.course}</Text>
           <Text style={styles.price}>R{item.price.toFixed(2)}</Text>
         </View>
+        <Text style={styles.idText}>ID: {item.id}</Text>
       </View>
       <TouchableOpacity
         style={styles.removeButton}
@@ -138,14 +149,14 @@ const AddMenuItemScreen: React.FC<Props> = ({ navigation }) => {
                 key={course}
                 style={[
                   styles.courseButton,
-                  selectedCourse === course && styles.selectedCourseButton,
+                  selectedCourse === course ? styles.selectedCourseButton : null,
                 ]}
                 onPress={() => setSelectedCourse(course)}
               >
                 <Text
                   style={[
                     styles.courseButtonText,
-                    selectedCourse === course && styles.selectedCourseButtonText,
+                    selectedCourse === course ? styles.selectedCourseButtonText : null,
                   ]}
                 >
                   {course}
@@ -167,7 +178,7 @@ const AddMenuItemScreen: React.FC<Props> = ({ navigation }) => {
           <TouchableOpacity 
             style={[
               styles.addButton, 
-              (!dishName.trim() || !description.trim() || !price.trim()) && styles.addButtonDisabled
+              (!dishName.trim() || !description.trim() || !price.trim()) ? styles.addButtonDisabled : null
             ]} 
             onPress={handleAddMenuItem}
             disabled={!dishName.trim() || !description.trim() || !price.trim()}
@@ -361,6 +372,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#333',
+  },
+  idText: {
+    fontSize: 10,
+    color: '#999',
+    marginTop: 4,
   },
   removeButton: {
     backgroundColor: '#FF3B30',

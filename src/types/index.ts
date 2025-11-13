@@ -1,4 +1,4 @@
-export type Course = 'Starters' | 'Mains' | 'Desserts';
+export type Course = 'Starters' | 'Mains' | 'Desserts' | 'Appetizer' | 'Hors D-Oeuvres' | 'Amuse-Bouche' | 'Soup' | 'Salad' | 'Sorbet' | 'Prosecco';
 
 export interface MenuItem {
   id: string;
@@ -8,4 +8,4 @@ export interface MenuItem {
   price: number;
 }
 
-export const COURSES: Course[] = ['Starters', 'Mains', 'Desserts'];
+export const COURSES: Course[] = ['Starters', 'Mains', 'Desserts', 'Appetizer', 'Hors D-Oeuvres', 'Amuse-Bouche', 'Soup', 'Salad', 'Sorbet', 'Prosecco'];
