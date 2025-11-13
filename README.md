@@ -1,7 +1,9 @@
 Chef App 🍽️
+
 A beautiful mobile app that helps chefs manage their menus and lets customers explore delicious dishes. Built with React Native and TypeScript for a smooth, professional experience.
 
 What This App Does ✨
+
 For Chefs:
 
 Create and manage your restaurant menu
@@ -23,7 +25,9 @@ View popular items and recommendations
 Enjoy personalized experiences
 
 How to Use the App 📱
+
 First Time Setup
+
 Open the app and wait for the splash screen
 
 Choose your profile type: Chef, Client 1, or Client 2
